@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pesanan_laundries', function (Blueprint $table) {
+        Schema::create('jenis_laundries', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pelanggan_id')->constrained('pelanggans');
-            $table->float('berat');
-            $table->date('tanggal_terima');
-            $table->date('tanggal_selesai');
-            $table->string('status');
+            $table->string('jenis_laundry');
+            $table->string('lama_proses');
+            $table->string('tarif');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pesanan_laundries');
+        Schema::dropIfExists('jenis_laundries');
     }
 };

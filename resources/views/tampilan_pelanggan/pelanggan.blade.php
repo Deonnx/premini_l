@@ -20,6 +20,7 @@
                                 <th class="text-center">Jenis Kelamin</th>
                                 <th class="text-center">Alamat</th>
                                 <th class="text-center">No Telephone</th>
+                                <th class="text-center">Foto Pelanggan</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -34,6 +35,10 @@
                                     <td class="text-center">{{ $p->jenis_kelamin }}</td>
                                     <td class="text-center">{{ $p->alamat }}</td>
                                     <td class="text-center">{{ $p->no_telephone }}</td>
+                                    <td>
+                                        <img src="{{ asset('storage/' . $p->foto_pelanggan) }}" alt="" width="90"
+                                            height="80">
+                                    </td>
                                     <td>
                                         <div class="hstack gap-3 flex-wrap">
                                             <button type="button" data-bs-toggle="modal"
@@ -59,7 +64,7 @@
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <form method="post" action="{{ route('pelanggan.update', $p->id) }}">
+                                                                    <form method="post" action="{{ route('pelanggan.update', $p->id) }}" enctype="multipart/form-data">
                                                                         @csrf
                                                                         @method('post')  <!-- Metode HTTP untuk update -->
 
@@ -91,6 +96,22 @@
                                                                                 <label for="no_telephone" class="form-label">No Telephone</label>
                                                                                 <input type="number" class="form-control" id="no_telephone" name="no_telephone" value="{{ old('no_telephone', $p->no_telephone) }}">
                                                                             </div>
+                                                                            <div class="mb-3">
+                                                                                <label for="foto_pelanggan{{ $p->id }}">Foto pelanggan</label>
+                                                                                <input type="file" class="form-control" id="foto_pelanggan{{ $p->id }}" name="foto_pelanggan">
+                                                                                <div>
+                                                                                    <div>
+                                                                                        <p><strong>Foto Sebelumnya:</strong></p>
+                                                                                        <img src="{{ asset('storage/' . $p->foto_pelanggan) }}" id="foto_pelanggan" width="90" height="80">
+                                                                                        <input type="hidden" name="current_foto" value="{{ $p->foto_pelanggan }}">
+                                                                                </div>
+                                                                                <div class="text-danger">
+                                                                                    @error('foto_pelanggan')
+                                                                                        {{ $message }}
+                                                                                    @enderror
+                                                                                </div>
+                                                                            </div>
+
                                                                             <div class="modal-footer">
                                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
                                                                                 <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
@@ -124,7 +145,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{ route('pelanggan.store') }}">
+                <form method="POST" action="{{ route('pelanggan.store') }} " enctype="multipart/form-data" >
                     @csrf
                     <div class="mb-3">
                         <label for="nama_pelanggan" class="form-label">Nama Pelanggan</label>
@@ -171,6 +192,16 @@
                             @enderror
                         </div>
                     </div>
+                    <div class ="mb-3">
+                        <label for="foto_pelanggan" class="form-label">Foto pelanggan</label>
+                        <input type="file" class="form-control"id="foto_pelanggan" name="foto_pelanggan">
+                        <div class="text-danger">
+                            @error('foto_pelanggan')
+                                {{ $message }}
+                            @enderror
+                        </div>
+                    </div>
+
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>

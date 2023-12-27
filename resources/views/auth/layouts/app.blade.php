@@ -806,18 +806,32 @@
                             <a class="nav-link menu-link" href="{{route('pelanggan')}}">
                                 <i class="ri-apps-2-line"></i> <span data-key="t-apps">Data Pelanggan</span>
                             </a>
+
                             <li class="nav-item">
-                                <a class="nav-link menu-link" href="{{ route('pembayaran') }}">
-                                    <i class="ri-suitcase-3-line"></i>
-                                    <span data-key="t-apps">Pembayaran</span>
+                                <a class="nav-link menu-link" href="{{ route('pengeluaran') }}">
+                                    <i class="ri-money-dollar-circle-line"></i> <span data-key="t-apps">Data Pengeluaran</span>
                                 </a>
                             </li>
+
                             <li class="nav-item">
-                                <a class="nav-link menu-link" href="{{ route('pesanan_laundry') }}">
-                                    <i class="ri-shopping-cart-line"></i>
-                                    <span data-key="t-apps">Pesanan Laundry</span>
+                                <a class="nav-link menu-link" href="{{ route('jenis_laundry') }}">
+                                    <i class="ri-shirt-fill"></i> <span data-key="t-apps">Jenis Layanan Laundry</span>
                                 </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link menu-link" href="{{ route('transaksi_laundry') }}">
+                                    <i class="ri-history-line"></i> <span data-key="t-apps">Transaksi Laundry</span>
+                                </a>
+                            </li>
+
+
+                            <li class="nav-item">
+                                <a class="nav-link menu-link" href="{{ route('data_laporan') }}">
+                                    <i class="ri-file-text-line"></i> <span data-key="t-apps">Data Laporan</span>
+                                </a>
+                            </li>
+
 
                             <li class="nav-item">
                                 <form action="{{ route('logout') }}" method="POST">
@@ -853,20 +867,7 @@
             </div>
             <!-- End Page-content -->
 
-            <footer class="footer">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <script>document.write(new Date().getFullYear())</script> © Velzon.
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="text-sm-end d-none d-sm-block">
-                                Design & Develop by Themesbrand
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+
         </div>
         <!-- end main content-->
 
@@ -890,11 +891,7 @@
         </div>
     </div>
 
-    <div class="customizer-setting d-none d-md-block">
-        <div class="btn-info rounded-pill shadow-lg btn btn-icon btn-lg p-2" data-bs-toggle="offcanvas" data-bs-target="#theme-settings-offcanvas" aria-controls="theme-settings-offcanvas">
-            <i class='mdi mdi-spin mdi-cog-outline fs-22'></i>
-        </div>
-    </div>
+
 
     <!-- Theme Settings -->
     <div class="offcanvas offcanvas-end border-0" tabindex="-1" id="theme-settings-offcanvas">

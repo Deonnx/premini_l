@@ -63,7 +63,7 @@ class UsersController extends Controller
         $request->validate([
             'username' => 'required|unique:users,name',
             'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:8',
+            'password' => 'required|min:8',
             // Add validation rules for other fields if needed
         ], [
             'username.required' => 'Username Tidak Boleh Kosong',
@@ -72,8 +72,6 @@ class UsersController extends Controller
             'email.email' => 'Email Tidak Valid',
             'email.unique' => 'Email Sudah Di Gunakan',
             'password.required' => 'Password Tidak Boleh Kosong',
-            'password.confirmed' => 'Password Tidak Sama',
-            'password.min' => 'Password Minimal 8 Karakter',
         ]);
 
         if (User::where('name', $request->name)->exists()) {

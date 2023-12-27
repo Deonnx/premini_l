@@ -6,15 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Pelanggan extends Model
+class Jenis_laundry extends Model
 {
     use HasFactory;
-    protected $table = 'pelanggans';
-    protected $fillable = ['nama_pelanggan', 'jenis_kelamin', 'alamat', 'no_telephone','foto_pelanggan'];
+    protected $table = 'jenis_laundries';
+    protected $fillable = ['jenis_laundry', 'lama_proses', 'tarif'];
 
-    public function transaksi_laundry(): HasMany
+    public function transaksi_laundry():HasMany
     {
         return $this->hasMany(Transaksi_laundry::class);
     }
-
 }

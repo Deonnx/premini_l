@@ -21,12 +21,10 @@
                                     </span>
                                 </div>
                                 <div class="flex-grow-1 overflow-hidden ms-3">
-                                    <p class="text-uppercase fw-medium text-muted text-truncate mb-3">Active Projects</p>
+                                    <p class="text-uppercase fw-medium text-muted text-truncate mb-3">Jumlah Pesanan Laundry</p>
                                     <div class="d-flex align-items-center mb-3">
-                                        <h4 class="flex-grow-1 mb-0"><span class="counter-value" data-target="825">0</span></h4>
-                                        <span class="badge bg-danger-subtle text-danger fs-12"><i class="ri-arrow-down-s-line fs-13 align-middle me-1"></i>5.02 %</span>
+                                        <h4 class="flex-grow-1 mb-0">0 Data</h4>
                                     </div>
-                                    <p class="text-muted text-truncate mb-0">Projects this month</p>
                                 </div>
                             </div>
                         </div><!-- end card body -->
@@ -43,12 +41,11 @@
                                     </span>
                                 </div>
                                 <div class="flex-grow-1 ms-3">
-                                    <p class="text-uppercase fw-medium text-muted mb-3">New Leads</p>
+                                    <p class="text-uppercase fw-medium text-muted mb-3">Pesanan  belum Di bayar</p>
                                     <div class="d-flex align-items-center mb-3">
-                                        <h4 class="flex-grow-1 mb-0"><span class="counter-value" data-target="7522">0</span></h4>
-                                        <span class="badge bg-success-subtle text-success fs-12"><i class="ri-arrow-up-s-line fs-13 align-middle me-1"></i>3.58 %</span>
+                                        <h4 class="flex-grow-1 mb-0">0 Pesanan</h4>
                                     </div>
-                                    <p class="text-muted mb-0">Leads this month</p>
+
                                 </div>
                             </div>
                         </div><!-- end card body -->
@@ -65,12 +62,11 @@
                                     </span>
                                 </div>
                                 <div class="flex-grow-1 overflow-hidden ms-3">
-                                    <p class="text-uppercase fw-medium text-muted text-truncate mb-3">Total Hours</p>
+                                    <p class="text-uppercase fw-medium text-muted text-truncate mb-3">Belum di proses</p>
                                     <div class="d-flex align-items-center mb-3">
-                                        <h4 class="flex-grow-1 mb-0"><span class="counter-value" data-target="168">0</span>h <span class="counter-value" data-target="40">0</span>m</h4>
-                                        <span class="badge bg-danger-subtle text-danger fs-12"><i class="ri-arrow-down-s-line fs-13 align-middle me-1"></i>10.35 %</span>
+                                        <h4 class="flex-grow-1 mb-0">0 pesanan</h4>
                                     </div>
-                                    <p class="text-muted text-truncate mb-0">Work this month</p>
+
                                 </div>
                             </div>
                         </div><!-- end card body -->
