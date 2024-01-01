@@ -22,9 +22,9 @@
                                 <th class="text-center">Tanggal Selesai</th>
                                 <th class="text-center">Jumlah (kg) </th>
                                 <th class="text-center">Total Bayar </th>
-                                <th class="text-center">Catatan </th>
+
                                 <th class="text-center">Status </th>
-                                <th class="text-center">Status Baju </th>
+
                                 <th class="text-center">Aksi</th>
                             </tr>
                         </thead>
@@ -41,8 +41,8 @@
                                     <td class="text-center">
                                         @php
                                             $tanggalMulai = \Carbon\Carbon::parse($tl->created_at);
-                                            $tanggalSelesai = \Carbon\Carbon::parse($tl->tanggal_selesai);
-                                            $lamaProses = $tanggalSelesai->diffInDays($tanggalMulai);
+                                            $tanggal_selesai = \Carbon\Carbon::parse($tl->jenis_laundry->tanggal_selesai);
+                                             $lama_proses = $tanggal_selesai->diffInDays($tanggalMulai);
                                             echo $lama_proses . ' hari';
                                         @endphp
                                     </td>
@@ -55,7 +55,7 @@
                                             echo 'Rp ' . number_format($totalBayar, 0, ',', '.');
                                         @endphp
                                     </td>
-                                    <td class="text-center">{{ $tl->catatan }}</td>
+                                    {{-- <td class="text-center">{{ $tl->catatan }}</td> --}}
                                     <td class="text-center">
                                         @if($tl->status == 'lunas')
                                             <span class="badge badge-success">Lunas</span>
@@ -63,19 +63,19 @@
                                             <span class="badge badge-warning">Belum Lunas</span>
                                         @endif
                                     </td>
-                                    <td class="text-center">
+                                    {{-- <td class="text-center">
                                         @if($tl->status_baju == 'sudah diambil')
                                             <span class="badge badge-success">Sudah Diambil</span>
                                         @else
                                             <span class="badge badge-warning">Belum Diambil</span>
                                         @endif
-                                    </td>
+                                    </td> --}}
 
                                     <td>
-                                        <div class="hstack gap-3 flex-wrap">
+                                        {{-- <div class="hstack gap-3 flex-wrap">
                                             <button type="button" data-bs-toggle="modal"
                                             data-bs-target="#editTransaksilaundry{{ $tl->id }}" class="btn btn-label"><i
-                                                class="ri-edit-2-line"></i></button>
+                                                class="ri-edit-2-line"></i></button> --}}
 
                                                 <form id="delete-form-{{ $tl->id }}" action="{{ route('transaksi_laundry.destroy', $tl->id) }}" method="post">
                                                     @csrf
@@ -230,7 +230,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
                         <div class="modal-body">
-                            <form method="POST" action="{{ route('transaksi_laundry.store') }}">
+                            <form method="post" action="{{ route('transaksi_laundry.store') }}">
                                 @csrf
                                 <div class="mb-3">
                                     <label for="nama_pelanggan" class="form-label">Nama Pelanggan</label>
@@ -317,11 +317,11 @@
                                 </div>
 
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                    </div>
-                </form>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                 </div>
+                              </form>
             </div>
         </div>
     </div>
@@ -339,53 +339,45 @@
 
 <script>
     $(document).ready(function() {
-        $('#jenis_laundry').change(function() {
-            var jenisLaundryId = $(this).val();
+       $('#jenis_laundry').change(function() {
+          var jenisLaundryId = $(this).val();
 
-            // Kirim request ke server untuk mengambil data tarif dan tanggal selesai
-            $.ajax({
-                type: 'GET',
-                url: '/autofill',
-                data: {
-                    jenis_laundry_id: jenisLaundryId
-                },
-                success: function(response) {
-                    if (response.success) {
-                        // Isi nilai tarif dan tanggal_selesai pada form
-                        $('#tarif').val(response.success.tarif);
-                        $('#tanggal_selesai').val(response.success.tanggal_selesai);
-                    } else {
-                        alert(response.error);
-                    }
-                },
-                error: function(error) {
-                    console.log(error);
-                    alert('Terjadi kesalahan saat mengambil data.');
+          $.ajax({
+             type: 'GET',
+             url: '/autofill',
+             data: { jenis_laundry_id: jenisLaundryId },
+             success: function(response) {
+                if (response.success) {
+                   $('#tarif').val(response.success.tarif);
+                   $('#tanggal_selesai').val(response.success.tanggal_selesai);
+                } else {
+                   alert(response.error);
                 }
-            });
-        });
+             },
+             error: function(error) {
+                console.log(error);
+                alert('Terjadi kesalahan saat mengambil data.');
+             }
+          });
+       });
 
-        // Menghitung total bayar
-        $('#jumlah_kelo').on('input', function() {
-            sum();
-        });
+       $('#jumlah_kelo').on('input', function() {
+          sum();
+       });
+
+       function sum() {
+          var jumlah_kelo = $('#jumlah_kelo').val();
+          var tarif = $('#tarif').val();
+          var total_bayar = parseInt(jumlah_kelo) * parseFloat(tarif);
+
+          if (!isNaN(total_bayar)) {
+             $('#total_bayar').val(total_bayar);
+          } else {
+             $('#total_bayar').val('');
+          }
+       }
     });
-
-    function sum() {
-        var jumlah_kelo = document.getElementById('jumlah_kelo').value;
-        var tarif = document.getElementById('tarif').value;
-
-        // Jumlah kilo * tarif
-        var total_bayar = parseInt(jumlah_kelo) * parseFloat(tarif);
-
-        // Memeriksa apakah parameter numerik
-        if (!isNaN(total_bayar)) {
-            document.getElementById('total_bayar').value = total_bayar;
-        } else {
-            document.getElementById('total_bayar').value = '';
-        }
-    }
-</script>
+ </script>
  <!-- Pastikan ini tetap ada di akhir file -->
 
 

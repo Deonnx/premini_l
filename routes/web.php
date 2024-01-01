@@ -6,6 +6,7 @@ use App\Http\Controllers\JenisLaundryController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\TransaksiLaundryController;
 use App\Http\Controllers\UsersController;
+use App\Http\Middleware\AdminMiddleware;
 use App\Models\Transaksi_laundry;
 use Illuminate\Support\Facades\Route;
 
@@ -16,11 +17,14 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/logout', [UsersController::class, 'logout'])->name('logout');
 
+
+    Route::middleware([AdminMiddleware::class])->group(function () {
     Route::get('/pelanggan', [PelangganController::class, 'index'])->name('pelanggan');
     Route::post('/pelanggan/create', [PelangganController::class, 'create'])->name('pelanggan.create');
     Route::post('/pelanggan/store', [PelangganController::class, 'store'])->name('pelanggan.store');
     Route::post('/pelanggan/update/{id}', [PelangganController::class, 'update'])->name('pelanggan.update');
     Route::delete('/pelanggan/destroy/{id}', [PelangganController::class, 'destroy'])->name('pelanggan.destroy');
+});
 
     Route::get('/pengeluaran',[DataPengeluaranController::class, 'index'])->name('pengeluaran');
     Route::post('/pengeluaran/create',[DataPengeluaranController::class, 'create'])->name('pengeluaran.create');

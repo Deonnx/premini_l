@@ -10,8 +10,7 @@ class Transaksi_laundry extends Model
 {
     use HasFactory;
     protected $table = 'transaksi_laundries';
-
-    protected $guarded = [];
+    protected $fillable = ['pelanggan_id', 'jenis_laundry_id', 'tarif','tanggal_selesai', 'jumlah_kelo', 'total_bayar', 'status'];
 
     public function pelanggan()
     {

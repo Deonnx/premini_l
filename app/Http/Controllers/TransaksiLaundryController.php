@@ -41,13 +41,11 @@ public function autofill(Request $request)
         $jenis_laundry = Jenis_laundry::find($jenis_laundry_id);
 
         if ($jenis_laundry) {
-            $lama_proses = $jenis_laundry->waktu_proses;
-
-            // Pastikan $lama_proses adalah bilangan bulat atau dalam format yang benar
+            $lama_proses = $jenis_laundry->lama_proses;
             $lama_proses = intval($lama_proses);
 
-            // tanggal hari ini + lama proses
-            $tanggal_selesai = now()->addDays($lama_proses)->format('Y-m-d');
+            // Pastikan $lama_proses adalah bilangan bulat atau dalam format yang benar
+            $tanggal_selesai = now()->addDays($lama_proses)->toDateString();
 
             $data = [
                 'success' => [
@@ -68,7 +66,6 @@ public function autofill(Request $request)
 
     return response()->json($data);
 }
-
     // ... kode lain pada controller
 
     /**
@@ -85,7 +82,7 @@ public function autofill(Request $request)
             'tarif' => 'required|numeric|min:0', // Tambahkan aturan validasi untuk tarif
             'catatan' => 'required|string',
             'status' => 'required|in:lunas,belum lunas',
-            'status_baju' => 'required|in:sudah diambil,belum diambil',
+            // 'status_baju' => 'required|in:sudah diambil,belum diambil',
         ], [
             'nama_pelanggan.required' => 'Kolom pelanggan harus diisi.',
             'jenis_laundry.required' => 'Kolom jenis laundry harus diisi.',
@@ -107,18 +104,21 @@ public function autofill(Request $request)
         $status = $request->input('total_bayar') > 0 ? 'lunas' : 'belum lunas';
 
         // Tentukan kondisi untuk status_baju
-        $statusBaju = $request->input('status_baju') === 'sudah diambil' ? 'sudah diambil' : 'belum diambil';
+        // $statusBaju = $request->input('status_baju') === 'sudah diambil' ? 'sudah diambil' : 'belum diambil';
 
-        // Buat transaksi laundry baru dengan menambahkan status dan status_baju
-       Transaksi_laundry::create([
+        // $catatan = $request->input('catatan', '');
+
+        // Create new transaksi laundry with status, status_baju, and catatan
+        Transaksi_laundry::create([
             'pelanggan_id' => $request->input('nama_pelanggan'),
             'jenis_laundry_id' => $request->input('jenis_laundry'),
+            'tarif' => $request->input('tarif'),
             'tanggal_selesai' => $request->input('tanggal_selesai'),
             'jumlah_kelo' => $request->input('jumlah_kelo'),
             'total_bayar' => $request->input('total_bayar'),
-            'catatan' => $request->input('catatan'),
+            // 'catatan' => $catatan,  // Use the modified 'catatan' variable
             'status' => $status,
-            'status_baju' => $statusBaju,
+            // 'status_baju' => $statusBaju,
         ]);
 
         // Redirect atau tampilkan pesan sukses
@@ -149,7 +149,8 @@ public function autofill(Request $request)
     {
         $transaksi_laundry = Transaksi_laundry::findOrfail($id);
 
-        $this->validate($request,[
+        if ($transaksi_laundry) {
+            $request->validate([
                     'pelanggan_id' => 'required|exists:pelanggans,id',
                     'jenis_laundry_id' => 'required|exists:jenis_laundries,id',
                     'tanggal_selesai' => 'required|date',
@@ -157,7 +158,7 @@ public function autofill(Request $request)
                     'total_bayar' => 'required|numeric|min:0',
                     'catatan' => 'required|string',
                     'status' => 'required|in:lunas,belum lunas',
-                    'status_baju' => 'required|in:sudah diambil,belum diambil',
+                    // 'status_baju' => 'required|in:sudah diambil,belum diambil',
                 ], [
                     'pelanggan_id.required' => 'Kolom pelanggan harus diisi.',
                     'jenis_laundry_id.required' => 'Kolom jenis laundry harus diisi.',
@@ -166,7 +167,7 @@ public function autofill(Request $request)
                     'total_bayar.required' => 'Kolom total bayar harus diisi.',
                     'catatan.required' => 'Kolom catatan harus diisi.',
                     'status.required' => 'Kolom status harus diisi.',
-                    'status_baju.required' => 'Kolom status baju harus diisi.',
+                    // 'status_baju.required' => 'Kolom status baju harus diisi.',
                 ]);
 
                 // Logika update data di sini
@@ -174,6 +175,7 @@ public function autofill(Request $request)
                 // Redirect atau tampilkan pesan sukses
                 return redirect()->route('transaksi_laundry')->with('success', 'Data berhasil diperbarui.');
             }
+        }
 
     /**
      * Remove the specified resource from storage.

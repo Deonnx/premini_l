@@ -19,9 +19,9 @@ return new class extends Migration
             $table->date('tanggal_selesai');
             $table->integer('jumlah_kelo');
             $table->integer('total_bayar');
-            $table->string('catatan');
+            // $table->string('catatan');
             $table->enum('status' , ['lunas','belum lunas'])->default('lunas');
-            $table->enum('status_baju' , ['sudah diambil','belum diambil'])->default('sudah diambil');
+            // $table->enum('status_baju' , ['sudah diambil','belum diambil'])->default('sudah diambil');
             $table->timestamps();
         });
     }

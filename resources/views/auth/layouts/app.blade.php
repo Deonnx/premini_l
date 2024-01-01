@@ -796,6 +796,7 @@
                     <div id="two-column-menu">
                     </div>
                     <ul class="navbar-nav" id="navbar-nav">
+                        @if (Auth::user()->role=='admin')
                         <li class="menu-title"><span data-key="t-menu">Menu</span></li>
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="{{route('dasbroad')}}" >
@@ -806,6 +807,16 @@
                             <a class="nav-link menu-link" href="{{route('pelanggan')}}">
                                 <i class="ri-apps-2-line"></i> <span data-key="t-apps">Data Pelanggan</span>
                             </a>
+                            @else
+                            <li class="nav-item">
+                                <a class="nav-link menu-link" href="{{route('dasbroad')}}" >
+                                    <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
+                                </a>
+                            </li> <!-- end Dashboard Menu -->
+                            <li class="nav-item">
+                                <a class="nav-link menu-link" href="{{route('pelanggan')}}">
+                                    <i class="ri-apps-2-line"></i> <span data-key="t-apps">Data Pelanggan</span>
+                                </a>
 
                             <li class="nav-item">
                                 <a class="nav-link menu-link" href="{{ route('pengeluaran') }}">
@@ -831,6 +842,7 @@
                                     <i class="ri-file-text-line"></i> <span data-key="t-apps">Data Laporan</span>
                                 </a>
                             </li>
+                            @endif
 
 
                             <li class="nav-item">
