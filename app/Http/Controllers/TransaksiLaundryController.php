@@ -73,6 +73,7 @@ public function autofill(Request $request)
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $this->validate($request, [
             'nama_pelanggan' => 'required|exists:pelanggans,id',
             'jenis_laundry' => 'required|exists:jenis_laundries,id',
@@ -80,8 +81,8 @@ public function autofill(Request $request)
             'jumlah_kelo' => 'required|integer|min:1',
             'total_bayar' => 'required|numeric|min:0',
             'tarif' => 'required|numeric|min:0', // Tambahkan aturan validasi untuk tarif
-            'catatan' => 'required|string',
-            'status' => 'required|in:lunas,belum lunas',
+            // 'catatan' => 'required|string',
+            'status' => 'required|in:0,1',
             // 'status_baju' => 'required|in:sudah diambil,belum diambil',
         ], [
             'nama_pelanggan.required' => 'Kolom pelanggan harus diisi.',
@@ -92,13 +93,13 @@ public function autofill(Request $request)
             'tanggal_selesai.required' => 'Kolom tanggal selesai harus diisi.',
             'jumlah_kelo.required' => 'Kolom jumlah kelo harus diisi.',
             'total_bayar.required' => 'Kolom total bayar harus diisi.',
-            'catatan.required' => 'Kolom catatan harus diisi.',
+            // 'catatan.required' => 'Kolom catatan harus diisi.',
             'status.required' => 'Kolom status harus diisi.',
             'status_baju.required' => 'Kolom status baju harus diisi.',
         ]);
 
 
-
+        // dd($request->all());
 
         // Tentukan kondisi untuk status
         $status = $request->input('total_bayar') > 0 ? 'lunas' : 'belum lunas';

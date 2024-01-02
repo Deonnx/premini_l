@@ -803,10 +803,7 @@
                                 <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
                             </a>
                         </li> <!-- end Dashboard Menu -->
-                        <li class="nav-item">
-                            <a class="nav-link menu-link" href="{{route('pelanggan')}}">
-                                <i class="ri-apps-2-line"></i> <span data-key="t-apps">Data Pelanggan</span>
-                            </a>
+
                             @else
                             <li class="nav-item">
                                 <a class="nav-link menu-link" href="{{route('dasbroad')}}" >
@@ -817,7 +814,6 @@
                                 <a class="nav-link menu-link" href="{{route('pelanggan')}}">
                                     <i class="ri-apps-2-line"></i> <span data-key="t-apps">Data Pelanggan</span>
                                 </a>
-
                             <li class="nav-item">
                                 <a class="nav-link menu-link" href="{{ route('pengeluaran') }}">
                                     <i class="ri-money-dollar-circle-line"></i> <span data-key="t-apps">Data Pengeluaran</span>
