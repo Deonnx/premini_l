@@ -97,53 +97,54 @@ class PelangganController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
-    {
-        $pelanggan = Pelanggan::find($id);
+{
+    $pelanggan = Pelanggan::find($id);
 
-        if ($pelanggan) {
-            $request->validate([
-                'nama_pelanggan' => 'required|string|max:255',
-                'jenis_kelamin' => 'required|string',
-                'alamat' => 'required|string|max:255',
-                'no_telephone' => 'required|string|digits:12',
-                'foto_pelanggan' => 'nullable|mimes:jpeg,png,jpg|max:2048', // Allow null for cases when no new file is uploaded
-            ], [
-                'nama_pelanggan.required' => 'Nama pelanggan wajib diisi.',
-                'nama_pelanggan.max' => 'Nama pelanggan maksimal :max karakter.',
-                'jenis_kelamin.required' => 'Jenis kelamin wajib diisi.',
-                'alamat.required' => 'Alamat wajib diisi.',
-                'alamat.max' => 'Alamat maksimal :max karakter.',
-                'no_telephone.required' => 'Nomor telepon wajib diisi.',
-                'no_telephone.max' => 'Nomor telepon maksimal :max karakter.',
-                'no_telephone.digits' => 'Nomor telepon harus terdiri dari :digits digit.',
-                'foto_pelanggan.mimes' => 'Format gambar harus jpeg, png, atau jpg',
-                'foto_pelanggan.max' => 'Ukuran gambar maksimum 2MB',
-            ]);
+    if ($pelanggan) {
+        $request->validate([
+            'nama_pelanggan' => 'required|string|max:255',
+            'jenis_kelamin' => 'required|string',
+            'alamat' => 'required|string|max:255',
+            'no_telephone' => 'required|string|digits:12',
+            'foto_pelanggan' => 'nullable|mimes:jpeg,png,jpg|max:2048', // Allow null for cases when no new file is uploaded
+        ], [
+            'nama_pelanggan.required' => 'Nama pelanggan wajib diisi.',
+            'nama_pelanggan.max' => 'Nama pelanggan maksimal :max karakter.',
+            'jenis_kelamin.required' => 'Jenis kelamin wajib diisi.',
+            'alamat.required' => 'Alamat wajib diisi.',
+            'alamat.max' => 'Alamat maksimal :max karakter.',
+            'no_telephone.required' => 'Nomor telepon wajib diisi.',
+            'no_telephone.max' => 'Nomor telepon maksimal :max karakter.',
+            'no_telephone.digits' => 'Nomor telepon harus terdiri dari :digits digit.',
+            'foto_pelanggan.mimes' => 'Format gambar harus jpeg, png, atau jpg',
+            'foto_pelanggan.max' => 'Ukuran gambar maksimum 2MB',
+        ]);
 
-            $foto_pelanggan = $pelanggan->foto_pelanggan;
+        $foto_pelanggan = $pelanggan->foto_pelanggan;
 
-            if ($request->hasFile('foto_pelanggan')) {
-                $foto_pelanggan = $request->file('foto_pelanggan')->store('gambar', 'public');
-
-                if ($pelanggan->foto_pelanggan && trim($pelanggan->foto_pelanggan) !== trim($request->input('current_foto'))) {
-                    Storage::disk('public')->delete($pelanggan->foto_pelanggan);
-                }
+        if ($request->hasFile('foto_pelanggan')) {
+            // Hapus foto lama jika ada
+            if ($pelanggan->foto_pelanggan) {
+                Storage::disk('public')->delete($pelanggan->foto_pelanggan);
             }
 
-            $pelanggan->update([
-                'nama_pelanggan' => $request->nama_pelanggan,
-                'jenis_kelamin' => $request->jenis_kelamin,
-                'alamat' => $request->alamat,
-                'no_telephone' => $request->no_telephone,
-                'foto_pelanggan' => $foto_pelanggan,
-            ]);
-
-            return redirect()->route('pelanggan')->with('success', 'Data berhasil di edit');
-        } else {
-            return redirect()->route('pelanggan')->with('error', 'Data tidak ditemukan');
+            // Simpan foto baru
+            $foto_pelanggan = $request->file('foto_pelanggan')->store('gambar', 'public');
         }
-    }
 
+        $pelanggan->update([
+            'nama_pelanggan' => $request->nama_pelanggan,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'alamat' => $request->alamat,
+            'no_telephone' => $request->no_telephone,
+            'foto_pelanggan' => $foto_pelanggan,
+        ]);
+
+        return redirect()->route('pelanggan')->with('success', 'Data berhasil di edit');
+    } else {
+        return redirect()->route('pelanggan')->with('error', 'Data tidak ditemukan');
+    }
+}
 
 
 
@@ -153,19 +154,24 @@ class PelangganController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy($id)
-    {
-        try {
-            $pelanggan = Pelanggan::findOrFail($id); // Menemukan dan mendapatkan data pelanggan berdasarkan ID
+{
+    try {
+        $pelanggan = Pelanggan::findOrFail($id);
 
-            // Hapus foto di folder
-            if ($pelanggan->foto_pelanggan) {
-                Storage::disk('public')->delete($pelanggan->foto_pelanggan);
+        if ($pelanggan->foto_pelanggan) {
+            // Pastikan bahwa foto_pelanggan benar-benar berisi nama file yang valid
+            $fotoPelangganPath = 'gambar/' . $pelanggan->foto_pelanggan;
+
+            if (Storage::disk('public')->exists($fotoPelangganPath)) {
+                // Hapus foto di folder
+                Storage::disk('public')->delete($fotoPelangganPath);
             }
+        }
 
-            $pelanggan->delete(); // Menghapus data pelanggan
+        $pelanggan->delete();
 
-            return redirect()->route('pelanggan')->with('success', 'Data berhasil dihapus');
-        } catch (\Exception $e) { // Menangkap pengecualian
+        return redirect()->route('pelanggan')->with('success', 'Data berhasil dihapus');
+    } catch (\Exception $e) { // Menangkap pengecualian
             // Tambahkan pernyataan ini untuk melihat informasi pengecualian
             return redirect()->back()->with('error', 'Pelanggan sedang digunakan');
 
