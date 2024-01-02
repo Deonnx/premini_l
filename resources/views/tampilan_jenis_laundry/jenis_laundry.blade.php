@@ -12,8 +12,8 @@
                 </div>
             </div>
             <div class="table-responsive mt-4 mt-xl-0">
-                <table class="table table-pink table-striped table-nowrap align-middle mb-0"> <!-- Change table-success to table-pink -->
-                    <thead style="background-color:  #fad0d7"> <!-- Light pink background color -->
+                <table class="table table-pink table-striped table-nowrap align-middle mb-0">
+                    <thead style="background-color:  #fad0d7"> 
                             <tr>
                                 <th class="text-center">Nomer</th>
                                 <th class="text-center">Jenis Layanan Laundry</th>

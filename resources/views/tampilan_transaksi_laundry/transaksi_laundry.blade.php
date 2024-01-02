@@ -38,12 +38,13 @@
                                 <td class="text-center">{{ $nomor++ }}</td>
                                 <td class="text-center">{{ $tl->pelanggan->nama_pelanggan }}</td>
                                 <td class="text-center">{{ $tl->jenis_laundry->jenis_laundry }}</td>
-                                <td class="text-center">{{ $tl->jenis_laundry->tarif }}</td>
+                                <td class="text-center">Rp {{ number_format($tl->jenis_laundry->tarif, 0, ',', '.') }}</td>
+
                                 <td class="text-center">
                                     {{ \Carbon\Carbon::parse($tl->tanggal_selesai)->formatLocalized('%d %B %Y') }}
                                 </td>
 
-                                <td class="text-center">{{ $tl->jumlah_kelo }}</td>
+                                <td class="text-center">{{ $tl->jumlah_kelo }}kg</td>
                                 <td class="text-center">
                                     @php
                                         $tarifPerKelo = $tl->jenis_laundry->tarif; // Ambil tarif dari jenis laundry terkait

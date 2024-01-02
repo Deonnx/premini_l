@@ -803,7 +803,16 @@
                                 <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
                             </a>
                         </li> <!-- end Dashboard Menu -->
-
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="{{ route('data_laporan') }}">
+                                <i class="ri-file-text-line"></i> <span data-key="t-apps">Data Laporan</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="{{ route('jenis_laundry') }}">
+                                <i class="ri-shirt-fill"></i> <span data-key="t-apps">Jenis Layanan Laundry</span>
+                            </a>
+                        </li>
                             @else
                             <li class="nav-item">
                                 <a class="nav-link menu-link" href="{{route('dasbroad')}}" >
@@ -820,11 +829,7 @@
                                 </a>
                             </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link menu-link" href="{{ route('jenis_laundry') }}">
-                                    <i class="ri-shirt-fill"></i> <span data-key="t-apps">Jenis Layanan Laundry</span>
-                                </a>
-                            </li>
+
 
                             <li class="nav-item">
                                 <a class="nav-link menu-link" href="{{ route('transaksi_laundry') }}">
@@ -833,11 +838,7 @@
                             </li>
 
 
-                            <li class="nav-item">
-                                <a class="nav-link menu-link" href="{{ route('data_laporan') }}">
-                                    <i class="ri-file-text-line"></i> <span data-key="t-apps">Data Laporan</span>
-                                </a>
-                            </li>
+
                             @endif
 
 

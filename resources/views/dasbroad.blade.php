@@ -23,7 +23,7 @@
                                 <div class="flex-grow-1 overflow-hidden ms-3">
                                     <p class="text-uppercase fw-medium text-muted text-truncate mb-3">Jumlah Pesanan Laundry</p>
                                     <div class="d-flex align-items-center mb-3">
-                                        <h4 class="flex-grow-1 mb-0">0 Data</h4>
+                                        <h4 class="flex-grow-1 mb-0">{{$pesananL}}Data</h4>
                                     </div>
                                 </div>
                             </div>
@@ -41,16 +41,16 @@
                                     </span>
                                 </div>
                                 <div class="flex-grow-1 ms-3">
-                                    <p class="text-uppercase fw-medium text-muted mb-3">Pesanan  belum Di bayar</p>
+                                    <p class="text-uppercase fw-medium text-muted mb-3">Jumlah Data Pengeluaran</p>
                                     <div class="d-flex align-items-center mb-3">
-                                        <h4 class="flex-grow-1 mb-0">0 Pesanan</h4>
+                                        <h4 class="flex-grow-1 mb-0">{{$pengeluaran}} Data</h4>
                                     </div>
 
                                 </div>
                             </div>
-                        </div><!-- end card body -->
+                        </div>
                     </div>
-                </div><!-- end col -->
+                </div>
 
                 <div class="col-xl-4">
                     <div class="card card-animate">
@@ -62,17 +62,17 @@
                                     </span>
                                 </div>
                                 <div class="flex-grow-1 overflow-hidden ms-3">
-                                    <p class="text-uppercase fw-medium text-muted text-truncate mb-3">Belum di proses</p>
+                                    <p class="text-uppercase fw-medium text-muted text-truncate mb-3">Jumlah Data Pelangggan</p>
                                     <div class="d-flex align-items-center mb-3">
-                                        <h4 class="flex-grow-1 mb-0">0 pesanan</h4>
+                                        <h4 class="flex-grow-1 mb-0">{{$pelanggan}} data</h4>
                                     </div>
 
                                 </div>
                             </div>
-                        </div><!-- end card body -->
+                        </div>
                     </div>
-                </div><!-- end col -->
-            </div><!-- end row -->
+                </div>
+            </div>
 
 
 
