@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('data_pengeluarans', function (Blueprint $table) {
+        Schema::create('saldo', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('laporan_id')->constrained('data_laporan');
-            $table->date('tanggal');
-            $table->string('catatan');
-            $table->string('pengeluaran');
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->foreignId('user_id')->constrained(); // Menyesuaikan dengan model User
+            $table->decimal('jumlah', 10, 2)->default(0.00);
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('data_pengeluarans');
+        Schema::dropIfExists('saldo');
     }
 };

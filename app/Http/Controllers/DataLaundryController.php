@@ -2,22 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pelanggan;
-use App\Models\data_pelanggan;
+use App\Models\DataLaundry;
+use App\Models\Transaksi_laundry;
 use Illuminate\Http\Request;
 
-class PelangganController extends Controller
+class DataLaundryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-
-        // Mengambil data laporan dengan data pengeluaran
-        public function index()
+    public function index()
     {
-        $pelanggan = Pelanggan::all();
-
-        return view('tampilan_pelanggan.pelanggan', compact('pelanggan'));
+        $transaksi_laundry = Transaksi_laundry::all();
+        return view('tampilan_data_laundry.data_laundry', compact('transaksi_laundry'));
     }
 
 
@@ -26,7 +20,7 @@ class PelangganController extends Controller
      */
     public function create()
     {
-        return view('data_pelanggan.create');
+        return view('data_laundry.create');
     }
 
     /**
@@ -40,7 +34,7 @@ class PelangganController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Pelanggan $pelanggan)
+    public function show(DataLaundry $datalaundry)
     {
         //
     }
@@ -48,7 +42,7 @@ class PelangganController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Pelanggan $pelanggan)
+    public function edit(DataLaundry $datalaundry)
     {
         //
     }
@@ -56,7 +50,7 @@ class PelangganController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Pelanggan $pelanggan)
+    public function update(Request $request, DataLaundry $datalaundry)
     {
         //
     }
@@ -64,8 +58,9 @@ class PelangganController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pelanggan $pelanggan)
+    public function destroy(DataLaundry $datalaundry)
     {
         //
     }
 }
+

@@ -18,7 +18,8 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email');
+            $table->string('username')->unique()->nullable();
+            $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['admin', 'user'])->default('user');
@@ -29,6 +30,7 @@ return new class extends Migration
         DB::table('users')->insert([
             'name' => 'Admin',
             'username' => 'admin',
+            'email' => 'admin@example.com',
             'password' => bcrypt('adminpassword'),
             'role' => 'admin',
             'created_at' => now(),

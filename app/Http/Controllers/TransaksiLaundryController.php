@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jenis_laundry;
-use App\Models\Pelanggan;
+use App\Models\Data_pelanggan;
 use App\Models\Transaksi_laundry;
+use App\Models\Saldo;
 use Exception;
 use Illuminate\Http\Request;
 use Symfony\Contracts\Service\Attribute\Required;
@@ -16,10 +17,10 @@ class TransaksiLaundryController extends Controller
      */
     public function index()
 {
-    $transaksi_laundry = Transaksi_laundry::with(['pelanggan', 'jenis_laundry'])->get();
-    $pelanggan = Pelanggan::all();
+    $transaksi_laundry = Transaksi_laundry::with(['data_pelanggan', 'jenis_laundry'])->orderBy('created_at', 'desc')->get();
+    $data_pelanggan = Data_pelanggan::all();
     $jenis_laundry = Jenis_laundry::all();
-    return view('tampilan_transaksi_laundry.transaksi_laundry', compact('transaksi_laundry', 'pelanggan', 'jenis_laundry'));
+    return view('tampilan_transaksi_laundry.transaksi_laundry', compact('transaksi_laundry', 'data_pelanggan', 'jenis_laundry'));
 }
 
 
@@ -28,12 +29,33 @@ class TransaksiLaundryController extends Controller
      */
     public function create()
 {
-    $pelanggan = Pelanggan::all();
+    $data_pelanggan = Data_pelanggan::all();
     $jenis_laundry = Jenis_laundry::all(); // Fix variable name here
 
-    return view('transaksi_laundry.create', compact('pelanggan', 'jenis_laundry'));
+    return view('transaksi_laundry.create', compact('data_pelanggan', 'jenis_laundry'));
 }
+public function lunasi($id)
+{
+    try {
+        $transaksi_laundry = Transaksi_laundry::findOrFail($id);
 
+        // Check if the transaction is not already marked as "Lunas"
+        if ($transaksi_laundry->status != 'lunas') {
+            // Update the status to "Lunas"
+            $transaksi_laundry->update(['status' => 'lunas']);
+            // You can also add any additional logic here if needed
+
+            // Redirect back with a success message
+            return redirect()->back()->with('success', 'Transaksi berhasil dilunasi.');
+        } else {
+            // If the transaction is already marked as "Lunas", redirect back with a warning message
+            return redirect()->back()->with('warning', 'Transaksi sudah lunas.');
+        }
+    } catch (Exception $e) {
+        // Handle exceptions if any
+        return redirect()->back()->with('error', 'Terjadi kesalahan saat melakukan operasi lunasi.');
+}
+}
 public function autofill(Request $request)
 {
     try {
@@ -98,11 +120,12 @@ public function autofill(Request $request)
             'status_baju.required' => 'Kolom status baju harus diisi.',
         ]);
 
-
+       
+       
         // dd($request->all());
 
         // Tentukan kondisi untuk status
-        $status = $request->input('total_bayar') > 0 ? 'lunas' : 'belum lunas';
+        $status = $request->input('status') == 1 ? 'lunas' : 'belum lunas';
 
         // Tentukan kondisi untuk status_baju
         // $statusBaju = $request->input('status_baju') === 'sudah diambil' ? 'sudah diambil' : 'belum diambil';
@@ -111,7 +134,7 @@ public function autofill(Request $request)
 
         // Create new transaksi laundry with status, status_baju, and catatan
         Transaksi_laundry::create([
-            'pelanggan_id' => $request->input('nama_pelanggan'),
+            'data_pelanggan_id' => $request->input('nama_pelanggan'),
             'jenis_laundry_id' => $request->input('jenis_laundry'),
             'tarif' => $request->input('tarif'),
             'tanggal_selesai' => $request->input('tanggal_selesai'),
@@ -152,7 +175,7 @@ public function autofill(Request $request)
 
         if ($transaksi_laundry) {
             $request->validate([
-                    'pelanggan_id' => 'required|exists:pelanggans,id',
+                    'data_pelanggan_id' => 'required|exists:pelanggans,id',
                     'jenis_laundry_id' => 'required|exists:jenis_laundries,id',
                     'tanggal_selesai' => 'required|date',
                     'jumlah_kelo' => 'required|integer|min:1',
@@ -161,7 +184,7 @@ public function autofill(Request $request)
                     'status' => 'required|in:lunas,belum lunas',
                     // 'status_baju' => 'required|in:sudah diambil,belum diambil',
                 ], [
-                    'pelanggan_id.required' => 'Kolom pelanggan harus diisi.',
+                    'data_pelanggan_id.required' => 'Kolom pelanggan harus diisi.',
                     'jenis_laundry_id.required' => 'Kolom jenis laundry harus diisi.',
                     'tanggal_selesai.required' => 'Kolom tanggal selesai harus diisi.',
                     'jumlah_kelo.required' => 'Kolom jumlah kelo harus diisi.',

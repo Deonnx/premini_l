@@ -25,8 +25,9 @@
                             <th class="text-center">Total Bayar </th>
 
                             <th class="text-center">Status </th>
+                            <th class="text-center">Aksi </th>
 
-                            <th class="text-center">Aksi</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -36,7 +37,7 @@
                         @foreach ($transaksi_laundry as $tl)
                             <tr>
                                 <td class="text-center">{{ $nomor++ }}</td>
-                                <td class="text-center">{{ $tl->pelanggan->nama_pelanggan }}</td>
+                                <td class="text-center">{{ $tl->data_pelanggan->nama_pelanggan }}</td>
                                 <td class="text-center">{{ $tl->jenis_laundry->jenis_laundry }}</td>
                                 <td class="text-center">Rp {{ number_format($tl->jenis_laundry->tarif, 0, ',', '.') }}</td>
 
@@ -53,7 +54,7 @@
                                     @endphp
                                 </td>
                                 {{-- <td class="text-center">{{ $tl->catatan }}</td> --}}
-                                <td class="text-center">
+                                <td class=" fs-4 text-center">
                                     @if ($tl->status == 'lunas')
                                         <span class="badge badge-success text-black">Lunas</span>
                                     @else
@@ -74,15 +75,31 @@
                                             data-bs-target="#editTransaksilaundry{{ $tl->id }}" class="btn btn-label"><i
                                                 class="ri-edit-2-line"></i></button> --}}
 
-                                    <form id="delete-form-{{ $tl->id }}"
-                                        action="{{ route('transaksi_laundry.destroy', $tl->id) }}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-outline-danger"
-                                            onclick="return confirm('Yakin ingin menghapus data?')" style="border: none;">
-                                            <i class="ri-delete-bin-line"></i>
-                                        </button>
-                                    </form>
+                                                
+                                                <form id="delete-form-{{ $tl->id }}"
+                                                    action="{{ route('transaksi_laundry.destroy', $tl->id) }}" method="post">
+                                                     @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-outline-danger"
+                                                         onclick="return confirm('Yakin ingin menghapus data?')" style="border: none;">
+                                                             <i class="ri-delete-bin-line"></i>
+                                                                 </button>
+                                                            </form>
+                                                             @if ($tl->status !== 'lunas')
+                                                            <form action="{{ route('transaksi_laundry.lunasi', $tl->id) }}" method="post">
+                                                             @csrf
+                                                             @if ($tl->status !== 'lunas')
+                                                             <form action="{{ route('transaksi_laundry.lunasi', $tl->id) }}" method="post">
+                                                                 @csrf
+                                                                 <button type="submit" class="btn btn-outline-success" onclick="return confirm('Yakin akan melunasi?')" style="border: none;">
+                                                                    <i class="fs-5 ri-money-dollar-circle-line"></i>
+                                                                </button>
+                                                             </form>
+                                                         @endif
+                                                            </td>
+                                                            </form>
+                                                            @endif
+                                                    </td>
 
 
                                     </form>
@@ -107,7 +124,7 @@
                                                             <select class="form-select" id="pelanggan_id"
                                                                 name="pelanggan_id">
                                                                 <option value="">Pilih Nama Pelanggan</option>
-                                                                @foreach ($pelanggan as $p)
+                                                                @foreach ($data_pelanggan as $p)
                                                                     <option value="{{ $p->id }}"
                                                                         {{ old('pelanggan_id', $tl->pelanggan_id) == $p->id ? 'selected' : '' }}>
                                                                         {{ $p->pelanggan_id }}
@@ -265,7 +282,7 @@
                             <label for="nama_pelanggan" class="form-label">Nama Pelanggan</label>
                             <select class="form-select" id="nama_pelanggan" name="nama_pelanggan">
                                 <option value="">Pilih Nama Pelanggan</option>
-                                @foreach ($pelanggan as $p)
+                                @foreach ($data_pelanggan as $p)
                                     <option value="{{ $p->id }}"
                                         {{ old('nama_pelanggan') == $p->id ? 'selected' : '' }}>
                                         {{ $p->nama_pelanggan }}
@@ -299,7 +316,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="tarif" class="form-label">Tarif (kg)</label>
+                            <label for="tarif" class="form-label">Tarif (Kg)</label>
                             <input type="text" class="form-control" id="tarif" name="tarif" required readonly>
                             <div class="text-danger">
                                 @error('tarif')
@@ -319,9 +336,9 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="jumlah_kelo" class="col-sm-2 col-form-label">Jumlah (Kg)</label>
-                            <div class="col-sm-10">
+                        <div class="mb-4">
+                            <label for="jumlah_kelo" class="col-sm-2 col-form-label">Total (Kg)</label>
+                            <div class="col-sm-12">
                                 <input class="form-control @error('jumlah_kelo') is-invalid @enderror" type="text" id="jumlah_kelo" name="jumlah_kelo" value="{{ old('jumlah_kelo') }}" required />
                                 @error('jumlah_kelo')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -340,9 +357,9 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="mb-3">
                             <label for="status" class="col-sm-2 col-form-label">Status</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-12">
                                 <select name="status" class="select2 form-control">
                                     <option value="1">Lunas</option>
                                     <option value="0">Belum lunas</option>

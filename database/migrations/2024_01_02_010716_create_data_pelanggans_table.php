@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('data_pengeluarans', function (Blueprint $table) {
+        Schema::create('data_pelanggans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('laporan_id')->constrained('data_laporan');
-            $table->date('tanggal');
-            $table->string('catatan');
-            $table->string('pengeluaran');
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->string('nama_pelanggan');
+            $table->string('jenis_kelamin');
+            $table->string('alamat');
+            $table->string('no_telephone');
+            $table->string('foto_pelanggan');
             $table->timestamps();
+
         });
     }
 
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('data_pengeluarans');
+        Schema::dropIfExists('data_pelanggans');
     }
 };

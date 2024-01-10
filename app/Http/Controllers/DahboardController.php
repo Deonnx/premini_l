@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Data_laporan;
 use App\Models\Data_pengeluaran;
 use App\Models\Pelanggan;
+use App\Models\Saldo;
 use App\Models\Transaksi_laundry;
 use Illuminate\Http\Request;
 
@@ -15,11 +15,21 @@ class DahboardController extends Controller
      */
     public function index()
     {
-     $pesananL = Transaksi_laundry::count();
-     $pengeluaran = Data_pengeluaran::count();
-     $pelanggan = Pelanggan::count();
-    //  dd($pesananL);
-     return view('dasbroad',compact('pesananL','pengeluaran','pelanggan'));
+        // Calculate total transaksi laundry
+        $totalTransaksiLaundry = Transaksi_laundry::sum('total_bayar');
+
+        // Calculate total pengeluaran
+        $totalPengeluaran = Data_pengeluaran::sum('pengeluaran');
+
+        // Calculate saldo
+        $saldoAkhir = max(0, $totalTransaksiLaundry - $totalPengeluaran);
+
+        // Get counts for other data
+        $pesananL = Transaksi_laundry::count();
+        $pengeluaran = Data_pengeluaran::count();
+        $pelanggan = Pelanggan::count();
+
+        return view('dasbroad', compact('pesananL', 'pengeluaran', 'pelanggan', 'saldoAkhir'));
     }
 
     /**
@@ -70,3 +80,8 @@ class DahboardController extends Controller
         //
     }
 }
+
+
+
+
+

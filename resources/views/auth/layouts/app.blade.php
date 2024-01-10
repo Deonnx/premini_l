@@ -67,9 +67,9 @@
                 <!-- App Search-->
                 <form class="app-search d-none d-md-block">
                     <div class="position-relative">
-                        <input type="text" class="form-control" placeholder="Search..." autocomplete="off" id="search-options" value="">
+                        {{-- <input type="text" class="form-control" placeholder="Search..." autocomplete="off" id="search-options" value="">
                         <span class="mdi mdi-magnify search-widget-icon"></span>
-                        <span class="mdi mdi-close-circle search-widget-icon search-widget-icon-close d-none" id="search-close-options"></span>
+                        <span class="mdi mdi-close-circle search-widget-icon search-widget-icon-close d-none" id="search-close-options"></span> --}}
                     </div>
                     <div class="dropdown-menu dropdown-menu-lg" id="search-dropdown">
                         <div data-simplebar style="max-height: 320px;">
@@ -799,61 +799,71 @@
                         @if (Auth::user()->role=='admin')
                         <li class="menu-title"><span data-key="t-menu">Menu</span></li>
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="{{route('dasbroad')}}" >
+                            <a class="nav-link menu-link @if (Route::is('dasbroad')) text-primary @endif" href="{{route('dasbroad')}}" >
                                 <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
                             </a>
                         </li> <!-- end Dashboard Menu -->
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="{{ route('data_laporan') }}">
-                                <i class="ri-file-text-line"></i> <span data-key="t-apps">Data Laporan</span>
+                            <a class="nav-link menu-link @if (Route::is('pelanggan')) text-primary @endif" href="{{route('pelanggan')}}">
+                                <i class="ri-apps-2-line"></i> <span data-key="t-apps">Data Pelanggan</span>
                             </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link menu-link" href="{{ route('jenis_laundry') }}">
-                                <i class="ri-shirt-fill"></i> <span data-key="t-apps">Jenis Layanan Laundry</span>
-                            </a>
-                        </li>
-                            @else
                             <li class="nav-item">
-                                <a class="nav-link menu-link" href="{{route('dasbroad')}}" >
+                                <a class="nav-link menu-link @if (Route::is('jenis_laundry')) text-primary @endif" href="{{ route('jenis_laundry') }}">
+                                    <i class="ri-shirt-fill"></i> <span data-key="t-apps">Jenis Layanan Laundry</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link menu-link @if (Route::is('data_laporan')) text-primary @endif" href="{{ route('data_laporan') }}">
+                                    <i class="ri-file-text-line"></i> <span data-key="t-apps">Data Laporan</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link menu-link @if (Route::is('data_laundry')) text-primary @endif" href="{{ route('data_laundry') }}">
+                                    <i class="ri-file-text-line"></i> <span data-key="t-apps">Data Laundry</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link menu-link @if (Route::is('saldo')) text-primary @endif" href="{{ route('saldo') }}">
+                                    <i class="ri-file-text-line"></i> <span data-key="t-apps">saldo</span>
+                                </a>
+                            </li>
+                            @else
+                            <li class="menu-title"><span data-key="t-menu">Menu</span></li>
+                            <li class="nav-item">
+                                <a class="nav-link menu-link @if (Route::is('dasbroad')) text-primary @endif" href="{{route('dasbroad')}}" >
                                     <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
                                 </a>
                             </li> <!-- end Dashboard Menu -->
                             <li class="nav-item">
-                                <a class="nav-link menu-link" href="{{route('pelanggan')}}">
+                                <a class="nav-link menu-link @if (Route::is('data_pelanggan')) text-primary @endif" href="{{route('data_pelanggan')}}">
                                     <i class="ri-apps-2-line"></i> <span data-key="t-apps">Data Pelanggan</span>
                                 </a>
                             <li class="nav-item">
-                                <a class="nav-link menu-link" href="{{ route('pengeluaran') }}">
+                                <a class="nav-link menu-link @if (Route::is('pengeluaran')) text-primary @endif" href="{{ route('pengeluaran') }}">
                                     <i class="ri-money-dollar-circle-line"></i> <span data-key="t-apps">Data Pengeluaran</span>
                                 </a>
                             </li>
 
-
-
                             <li class="nav-item">
-                                <a class="nav-link menu-link" href="{{ route('transaksi_laundry') }}">
+                                <a class="nav-link menu-link @if (Route::is('transaksi_laundry')) text-primary @endif" href="{{ route('transaksi_laundry') }}">
                                     <i class="ri-history-line"></i> <span data-key="t-apps">Transaksi Laundry</span>
                                 </a>
                             </li>
 
-
-
                             @endif
 
 
-                            <li class="nav-item">
-                                <form action="{{ route('logout') }}" method="POST">
+                            <li class="nav-item" style="margin-left: -6px">
+                                <form action="{{ route('logout') }}" method="POST" class="">
                                     @csrf
-                                    <button type="submit" style="border: none; background-color: transparent;">
+                                    <button type="submit" class="nav-link menu-link"
+                                        style="border: none; background-color: transparent;">
                                         <i class="ri-logout-circle-line"></i>
                                         <span data-key="t-apps">Logout</span>
                                     </button>
                                 </form>
                             </li>
-
-
-                    </ul>
+                        </ul>
                 </div>
                 <!-- Sidebar -->
             </div>

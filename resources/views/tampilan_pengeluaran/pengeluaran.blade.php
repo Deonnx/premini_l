@@ -19,7 +19,8 @@
                                 <th class="text-center">tanggal</th>
                                 <th class="text-center">catatan</th>
                                 <th class="text-center">pengeluaran</th>
-                                <th class="text-center">Aksi</th>
+                                <th class="text-center">Status</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -29,10 +30,13 @@
                             @foreach ($data_pengeluaran as $dp)
                                 <tr>
                                     <td class="text-center">{{ $nomor++ }}</td>
-                                    <td class="text-center">{{ $dp->tanggal }}</td>
+                                    <td class="text-center">
+                                        {{ \Carbon\Carbon::parse($dp->tanggal)->formatLocalized('%d %B %Y') }}
+                                </td>
                                     <td class="text-center">{{ $dp->catatan }}</td>
                                     <td class="text-center">Rp {{ number_format($dp->pengeluaran, 0, ',', '.') }}</td>
-                                    <td>
+                                    <td class="text-center">{{ ucfirst($dp->status) }}</td>
+                                    {{-- <td>
                                         <div class="hstack gap-3 flex-wrap">
                                             <button type="button" data-bs-toggle="modal"
                                             data-bs-target="#editPengeluaran{{ $dp->id }}" class="btn btn-label"><i
@@ -44,7 +48,7 @@
                                                     <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Yakin ingin menghapus data?')" style="border: none;">
                                                         <i class="ri-delete-bin-line"></i>
                                                     </button>
-                                                </form>
+                                                </form> --}}
 
 
                                                     </form>

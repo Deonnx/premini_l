@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Transaksi_laundry extends Model
+class DataLaundry extends Model
 {
     use HasFactory;
-    protected $table = 'transaksi_laundries';
+    protected $table = 'datalaundries';
     protected $fillable = ['data_pelanggan_id', 'jenis_laundry_id', 'tarif','tanggal_selesai', 'jumlah_kelo', 'total_bayar', 'status'];
 
     public function data_pelanggan()

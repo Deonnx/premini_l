@@ -14,11 +14,11 @@ class DataLaporanController extends Controller
 
         // Mengambil data laporan dengan data pengeluaran
         public function index()
-    {
-        $data_pengeluaran = Data_pengeluaran::all();
-
-        return view('tampilan_data_laporan.data_laporan', compact('data_pengeluaran'));
-    }
+        {
+            $data_pengeluaran = Data_pengeluaran::orderBy('created_at', 'desc')->get();
+    
+            return view('tampilan_data_laporan.data_laporan', compact('data_pengeluaran'));
+        }
 
 
     /**
@@ -59,6 +59,43 @@ class DataLaporanController extends Controller
     public function update(Request $request, Data_laporan $data_laporan)
     {
         //
+    }
+
+    public function approve(Request $request, $id)
+    {
+        $data_pengeluaran = Data_pengeluaran::find($id);
+
+        if (!$data_pengeluaran) {
+            return redirect()->route('data_laporan.index')->with('error', 'Data not found');
+        }
+
+        // Lakukan logika bisnis atau aksi yang sesuai dengan persetujuan
+        // Misalnya, tambahkan saldo atau lakukan operasi lain sesuai kebutuhan
+
+        // Set status menjadi 'approved'
+        $data_pengeluaran->update(['status' => 'approved']);
+
+        return redirect()->route('data_laporan.index')->with('success', 'Request berhasil disetujui.');
+    }
+
+    /**
+     * Reject the specified resource.
+     */
+    public function reject(Request $request, $id)
+    {
+        $data_pengeluaran = Data_pengeluaran::find($id);
+
+        if (!$data_pengeluaran) {
+            return redirect()->route('data_laporan.index')->with('error', 'Data not found');
+        }
+
+        // Lakukan logika bisnis atau aksi yang sesuai dengan penolakan
+        // Misalnya, kirim notifikasi atau lakukan operasi lain sesuai kebutuhan
+
+        // Set status menjadi 'rejected'
+        $data_pengeluaran->update(['status' => 'rejected']);
+
+        return redirect()->route('data_laporan.index')->with('success', 'Request berhasil ditolak.');
     }
 
     /**

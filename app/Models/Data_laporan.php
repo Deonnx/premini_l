@@ -9,10 +9,16 @@ class Data_laporan extends Model
 {
     use HasFactory;
     protected $table = 'data_laporans';
-    protected $fillable = ['tanggal', 'catatan', 'pengeluaran'];
+    protected $fillable = ['tanggal', 'catatan', 'pengeluaran','status'];
 
     public function data_pengeluaran()
     {
-        return $this->hasOne(Data_Pengeluaran::class);
+        return $this->hasMany(Data_pengeluaran::class);
+    }
+
+    // Fungsi untuk mengubah status
+    public function changeStatus($status)
+    {
+        $this->update(['status' => $status]);
     }
 }

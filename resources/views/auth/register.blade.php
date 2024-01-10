@@ -60,52 +60,54 @@
                 <div class="row justify-content-center">
                     <div class="col-md-8 col-lg-6 col-xl-5">
                         <div class="card mt-4">
-
                             <div class="card-body p-4">
                                 <div class="text-center mt-2">
                                     <h5 class="text-primary">Selamat Datang Kembali !</h5>
                                     <p class="text-muted">Daftar</p>
                                 </div>
                                 <div class="p-2 mt-4">
-                                    <form method="POST" action="{{route('register.proses')}}">
+                                    <form method="POST" action="{{ route('register.proses') }}">
                                         @csrf
 
                                         <div class="mb-3">
-                                            <label for="username" class="form-label">Email</label>
-                                            <input type="email" class="form-control" name="email" id="email" placeholder="Masukkan Email">
+                                            <label for="email" class="form-label">Email</label>
+                                            <input type="email" class="form-control" name="email" id="email" placeholder="Masukkan Email" value="{{ old('email') }}">
                                             @error('email')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+
                                         <div class="mb-3">
                                             <label for="username" class="form-label">Username</label>
-                                            <input type="text" class="form-control" name="username" id="username" placeholder="Masukkan Username">
+                                            <input type="text" class="form-control" name="username" id="username" placeholder="Masukkan Username" value="{{ old('username') }}">
                                             @error('username')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
 
-                                        {{-- <div class="mb-3">
-                                            <div class="float-end">
-                                                <a href="auth-pass-reset-basic.html" class="text-muted">Forgot password?</a>
-                                            </div> --}}
+                                        <div class="mb-3">
                                             <label class="form-label" for="password-input">Password</label>
                                             <div class="position-relative auth-pass-inputgroup mb-3">
                                                 <input type="password" name="password" class="form-control pe-5 password-input" placeholder="Masukkan Password" id="password-input">
-                                                <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
-                                                @error('password')
+                                                <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon">
+                                                    <i class="ri-eye-fill align-middle"></i>
+                                                </button>
+                                            </div>
+                                            @error('password')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
-                                            </div>
                                         </div>
 
-                                        <div class="form-check">
+                                        {{-- <div class="form-check">
                                             <input class="form-check-input" type="checkbox" value="" id="auth-remember-check">
                                             <label class="form-check-label" for="auth-remember-check">Remember me</label>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="mt-4">
                                             <button class="btn btn-secondary w-100" type="submit">Daftar</button>
+                                        </div>
+                                        <div class="mt-4">
+                                            <a href="{{ url('/login') }}" class="btn btn-secondary w-100">Sudah punya akun? Login sekarang!</a>
                                         </div>
 
                                         </div>
