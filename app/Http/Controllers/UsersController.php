@@ -45,7 +45,7 @@ class UsersController extends Controller
         return redirect()->route('dasbroad')->with('success', 'Selamat Datang, ' . $user->name . '!');
     }
 
-    return redirect()->back()->withInput($request->only('username'))->withErrors(['password' => ' password salah']);
+    return redirect()->back()->withInput($request->only('username'))->withErrors(['password' => ' password salah']);
 }
 
     function logout()
